@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { CartContext } from "../../context";
 
 interface NavItemProps {
   to: string;
@@ -18,6 +20,11 @@ const NavItem: React.FC<NavItemProps> = ({ to, children, activeStyle }) => {
 };
 
 const Navbar: React.FC = () => {
+  const context = useContext(CartContext);
+  if (!context) throw new Error("Context error");
+
+  const { count } = context;
+
   const activeStyle = "underline underline-offset-4";
 
   return (
@@ -78,7 +85,7 @@ const Navbar: React.FC = () => {
         </li>
         <li>
           <NavItem to="/cart" activeStyle={activeStyle}>
-            🛒 0
+            🛒 {count}
           </NavItem>
         </li>
       </ul>

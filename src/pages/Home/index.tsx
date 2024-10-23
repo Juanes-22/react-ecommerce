@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 
 import Layout from "../Layout";
 import Card from "../../components/Card";
+import ProductDetail from "../../components/ProductDetail";
+
 import { Product } from "../../types";
 
 const apiUrl = "https://fakestoreapi.com";
@@ -30,6 +32,7 @@ export default function Home() {
           <Card key={product.id} product={product} />
         ))}
       </div>
+      <ProductDetail />
     </Layout>
   );
 }

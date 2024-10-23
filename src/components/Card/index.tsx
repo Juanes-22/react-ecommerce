@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { CartContext } from "../../context";
 import { Product } from "../../types";
 
+import { PlusIcon } from "@heroicons/react/20/solid";
+
 interface CardProps {
   product: Product;
 }
@@ -28,7 +30,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
           onClick={() => setCount(count + 1)}
         >
-          +
+          <PlusIcon className="h-6" />
         </div>
       </figure>
       <p className="flex justify-between">

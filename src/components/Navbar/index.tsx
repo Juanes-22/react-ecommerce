@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { CartContext } from "../../context";
 
+import { ShoppingCartIcon } from "@heroicons/react/20/solid";
+
 interface NavItemProps {
   to: string;
   children: React.ReactNode;
@@ -31,9 +33,7 @@ const Navbar: React.FC = () => {
     <nav className="flex justify-between items-center fixed top-0 z-10 w-full py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg">
-          <NavItem to="/">
-            Shopi
-          </NavItem>
+          <NavItem to="/">Shopi</NavItem>
         </li>
         <li>
           <NavItem to="/all" activeStyle={activeStyle}>
@@ -83,10 +83,9 @@ const Navbar: React.FC = () => {
             Sign In
           </NavItem>
         </li>
-        <li>
-          <NavItem to="/cart" activeStyle={activeStyle}>
-            🛒 {count}
-          </NavItem>
+        <li className="flex items-center gap-2">
+          <ShoppingCartIcon className="h-5" />
+          <div>{count}</div>
         </li>
       </ul>
     </nav>

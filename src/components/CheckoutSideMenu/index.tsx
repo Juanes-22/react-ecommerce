@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { CartContext } from "../../context";
 
+import OrderCard from "../OrderCard";
+
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import "./styles.css";
 
@@ -8,7 +10,8 @@ const CheckoutSideMenu = () => {
   const context = useContext(CartContext);
   if (!context) throw new Error("Context error");
 
-  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu } = context;
+  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts } =
+    context;
 
   return (
     <aside
@@ -22,6 +25,16 @@ const CheckoutSideMenu = () => {
           className="h-6 cursor-pointer"
           onClick={() => closeCheckoutSideMenu()}
         />
+      </div>
+      <div className="px-6 overflow-y-scroll">
+        {cartProducts.map((product) => (
+          <OrderCard
+            key={product.id}
+            title={product.title}
+            price={product.price}
+            imageUrl={product.image}
+          />
+        ))}
       </div>
     </aside>
   );

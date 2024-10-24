@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { PlusIcon } from "@heroicons/react/20/solid";
+import { PlusIcon, CheckIcon } from "@heroicons/react/20/solid";
 
 import { CartContext } from "../../context";
 import { Product } from "../../types";
@@ -22,7 +22,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
     setCartProducts,
     cartProducts,
     openCheckoutSideMenu,
-    closeCheckoutSideMenu
+    closeCheckoutSideMenu,
   } = context;
 
   const showProduct = (product: Product) => {
@@ -31,12 +31,34 @@ const Card: React.FC<CardProps> = ({ product }) => {
     closeCheckoutSideMenu();
   };
 
-  const addProductToCart = (event: React.MouseEvent, product: Product) => {
+  const handleAddToCartClick = (event: React.MouseEvent, product: Product) => {
     event.stopPropagation();
     setCount(count + 1);
     setCartProducts([...cartProducts, product]);
     openCheckoutSideMenu();
     closeProductDetail();
+  };
+
+  const isProductInCart = (id: number) => {
+    return cartProducts.some((cartProduct) => cartProduct.id === id);
+  };
+
+  const renderIcon = (id: number) => {
+    const iconClasses =
+      "absolute top-0 right-0 flex justify-center items-center w-6 h-6 rounded-full m-2 p-1";
+
+    return isProductInCart(id) ? (
+      <div className={`${iconClasses} bg-black`}>
+        <CheckIcon className="h-6 w-6 text-white" />
+      </div>
+    ) : (
+      <div
+        className={`${iconClasses} bg-white`}
+        onClick={(event) => handleAddToCartClick(event, product)}
+      >
+        <PlusIcon className="h-6 w-6" />
+      </div>
+    );
   };
 
   return (
@@ -53,12 +75,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
           src={product.image}
           alt={product.title}
         />
-        <div
-          className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={(event) => addProductToCart(event, product)}
-        >
-          <PlusIcon className="h-6" />
-        </div>
+        {renderIcon(product.id)}
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{product.title}</span>

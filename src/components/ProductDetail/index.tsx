@@ -8,7 +8,7 @@ const ProductDetail = () => {
   const context = useContext(CartContext);
   if (!context) throw new Error("Context error");
 
-  const { isProductDetailOpen, closeProductDetail } = context;
+  const { isProductDetailOpen, closeProductDetail, productDetail } = context;
 
   return (
     <aside
@@ -23,6 +23,18 @@ const ProductDetail = () => {
           onClick={() => closeProductDetail()}
         />
       </div>
+      <figure className="w-full h-1/3 px-6">
+        <img
+          className="w-full h-full object-contain rounded-lg"
+          src={productDetail.image}
+          alt={productDetail.title}
+        />
+      </figure>
+      <p className="flex flex-col p-6">
+        <span className="font-medium text-2xl mb-2">${productDetail.price}</span>
+        <span className="font-medium text-md">{productDetail.title}</span>
+        <span className="font-light text-sm">{productDetail.description}</span>
+      </p>
     </aside>
   );
 };

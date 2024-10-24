@@ -13,17 +13,29 @@ const Card: React.FC<CardProps> = ({ product }) => {
   const context = useContext(CartContext);
   if (!context) throw new Error("Context error");
 
-  const { count, setCount, openProductDetail, setProductDetail } = context;
+  const {
+    count,
+    setCount,
+    openProductDetail,
+    setProductDetail,
+    setCartProducts,
+    cartProducts,
+  } = context;
 
   const showProduct = (product: Product) => {
     openProductDetail();
     setProductDetail(product);
   };
 
+  const addProductToCart = (product: Product) => {
+    setCount(count + 1);
+    setCartProducts([...cartProducts, product]);
+  };
+
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg"
-      onClick={(e) => showProduct(product)}
+      onClick={() => showProduct(product)}
     >
       <figure className="relative mb-2 w-full h-4/5">
         <span className="absolute bottom-0 left-0 bg-white/60 rounded-lg text-black text-xs m-2 px-3 py-0.5">
@@ -36,7 +48,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
         />
         <div
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={() => setCount(count + 1)}
+          onClick={() => addProductToCart(product)}
         >
           <PlusIcon className="h-6" />
         </div>

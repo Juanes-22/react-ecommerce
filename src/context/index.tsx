@@ -8,8 +8,10 @@ interface CartContextProps {
   openProductDetail: () => void;
   closeProductDetail: () => void;
   isProductDetailOpen: boolean;
-  productDetail: Product;
-  setProductDetail: React.Dispatch<React.SetStateAction<Product>>;
+  productDetail: Product | undefined;
+  setProductDetail: React.Dispatch<React.SetStateAction<Product | undefined>>;
+  cartProducts: Product[];
+  setCartProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -24,6 +26,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [productDetail, setProductDetail] = useState<Product | undefined>(
     undefined
   );
+  const [cartProducts, setCartProducts] = useState<Product[]>([]);
 
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
@@ -38,6 +41,8 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         isProductDetailOpen,
         productDetail,
         setProductDetail,
+        cartProducts,
+        setCartProducts
       }}
     >
       {children}

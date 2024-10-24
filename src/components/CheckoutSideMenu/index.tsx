@@ -10,8 +10,13 @@ const CheckoutSideMenu = () => {
   const context = useContext(CartContext);
   if (!context) throw new Error("Context error");
 
-  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts } =
+  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts, setCartProducts } =
     context;
+
+  const handleDelete = (id: number) => {
+    const filteredProducts = cartProducts.filter(product => product.id != id);
+    setCartProducts(filteredProducts);
+  }
 
   return (
     <aside
@@ -30,9 +35,11 @@ const CheckoutSideMenu = () => {
         {cartProducts.map((product) => (
           <OrderCard
             key={product.id}
+            id={product.id}
             title={product.title}
             price={product.price}
             imageUrl={product.image}
+            handleDelete={handleDelete}
           />
         ))}
       </div>

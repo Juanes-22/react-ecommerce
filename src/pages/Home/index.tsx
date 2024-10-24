@@ -5,6 +5,7 @@ import Card from "../../components/Card";
 import ProductDetail from "../../components/ProductDetail";
 
 import { Product } from "../../types";
+import CheckoutSideMenu from "../../components/CheckoutSideMenu";
 
 const apiUrl = "https://fakestoreapi.com";
 
@@ -33,6 +34,7 @@ export default function Home() {
         ))}
       </div>
       <ProductDetail />
+      <CheckoutSideMenu />
     </Layout>
   );
 }

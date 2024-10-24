@@ -12,6 +12,9 @@ interface CartContextProps {
   setProductDetail: React.Dispatch<React.SetStateAction<Product | undefined>>;
   cartProducts: Product[];
   setCartProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  isCheckoutSideMenuOpen: boolean;
+  openCheckoutSideMenu: () => void;
+  closeCheckoutSideMenu: () => void;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -22,7 +25,10 @@ interface CartProviderProps {
 
 const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [count, setCount] = useState(0);
+
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
+
   const [productDetail, setProductDetail] = useState<Product | undefined>(
     undefined
   );
@@ -30,6 +36,8 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
+  const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
+  const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
   return (
     <CartContext.Provider
@@ -42,7 +50,10 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         productDetail,
         setProductDetail,
         cartProducts,
-        setCartProducts
+        setCartProducts,
+        isCheckoutSideMenuOpen,
+        openCheckoutSideMenu,
+        closeCheckoutSideMenu,
       }}
     >
       {children}

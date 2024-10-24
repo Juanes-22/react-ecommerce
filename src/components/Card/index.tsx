@@ -17,19 +17,26 @@ const Card: React.FC<CardProps> = ({ product }) => {
     count,
     setCount,
     openProductDetail,
+    closeProductDetail,
     setProductDetail,
     setCartProducts,
     cartProducts,
+    openCheckoutSideMenu,
+    closeCheckoutSideMenu
   } = context;
 
   const showProduct = (product: Product) => {
     openProductDetail();
     setProductDetail(product);
+    closeCheckoutSideMenu();
   };
 
-  const addProductToCart = (product: Product) => {
+  const addProductToCart = (event: React.MouseEvent, product: Product) => {
+    event.stopPropagation();
     setCount(count + 1);
     setCartProducts([...cartProducts, product]);
+    openCheckoutSideMenu();
+    closeProductDetail();
   };
 
   return (
@@ -48,7 +55,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
         />
         <div
           className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={() => addProductToCart(product)}
+          onClick={(event) => addProductToCart(event, product)}
         >
           <PlusIcon className="h-6" />
         </div>

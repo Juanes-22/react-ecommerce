@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 
-import { Product } from "../types";
+import { Product, Order } from "../types";
 
 interface CartContextProps {
   count: number;
@@ -15,6 +15,8 @@ interface CartContextProps {
   isCheckoutSideMenuOpen: boolean;
   openCheckoutSideMenu: () => void;
   closeCheckoutSideMenu: () => void;
+  order: Order | undefined;
+  setOrder: React.Dispatch<React.SetStateAction<Order | undefined>>;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -33,6 +35,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     undefined
   );
   const [cartProducts, setCartProducts] = useState<Product[]>([]);
+  const [order, setOrder] = useState<Order | undefined>(undefined);
 
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
@@ -54,6 +57,8 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         isCheckoutSideMenuOpen,
         openCheckoutSideMenu,
         closeCheckoutSideMenu,
+        order,
+        setOrder,
       }}
     >
       {children}

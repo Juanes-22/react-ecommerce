@@ -6,3 +6,10 @@ export interface Product {
   category: string;
   image: string;
 }
+
+export interface Order {
+  products: Product[];
+  date: Date;
+  totalProducts: number;
+  totalPrice: number;
+}

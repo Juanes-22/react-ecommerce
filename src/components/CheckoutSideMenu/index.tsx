@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { CartContext, useCartContext } from "../../context";
+import { useCartContext } from "../../context";
 
 import OrderCard from "../OrderCard";
 
@@ -16,7 +15,8 @@ const CheckoutSideMenu = () => {
     closeCheckoutSideMenu,
     cartProducts,
     setCartProducts,
-    setOrder,
+    orders,
+    setOrders,
   } = useCartContext();
 
   const handleDelete = (id: number) => {
@@ -32,8 +32,9 @@ const CheckoutSideMenu = () => {
       totalPrice: getTotalPrice(cartProducts),
     };
 
-    setOrder(orderToAdd);
+    setOrders([...orders, orderToAdd]);
     setCartProducts([]);
+    closeCheckoutSideMenu();
   };
 
   return (

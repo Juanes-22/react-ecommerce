@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 import { Product, Order } from "../types";
 
@@ -20,6 +20,14 @@ interface CartContextProps {
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
+
+const useCartContext = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCartContext must be used within a CartProvider");
+  }
+  return context;
+};
 
 interface CartProviderProps {
   children: ReactNode;
@@ -66,4 +74,4 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   );
 };
 
-export { CartContext, CartProvider };
+export { CartProvider, CartContext, useCartContext };

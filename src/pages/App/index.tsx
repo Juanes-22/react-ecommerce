@@ -4,6 +4,7 @@ import { CartProvider } from "../../context";
 import Home from "../Home";
 import MyAccount from "../MyAccount";
 import MyOrders from "../MyOrders";
+import MyOrder from "../MyOrder";
 import NotFound from "../NotFound";
 import SignIn from "../SignIn";
 import Navbar from "../../components/Navbar";
@@ -14,6 +15,7 @@ const AppRoutes = () => {
   let routes = useRoutes([
     { path: "/", element: <Home /> },
     { path: "/my-orders", element: <MyOrders /> },
+    { path: "/my-orders/last", element: <MyOrder /> },
     { path: "/my-account", element: <MyAccount /> },
     { path: "/*", element: <NotFound /> },
     { path: "/sign-in", element: <SignIn /> },

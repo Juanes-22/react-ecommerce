@@ -27,6 +27,9 @@ interface CartContextProps {
   setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  searchByTitle: string;
+  setSearchByTitle: React.Dispatch<React.SetStateAction<string>>;
+  filteredProducts: Product[];
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -56,6 +59,8 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [orders, setOrders] = useState<Order[]>([]);
 
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [searchByTitle, setSearchByTitle] = useState("");
 
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
@@ -74,6 +79,18 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     };
     fetchData();
   }, []);
+
+  const filterProductsByTitle = () => {
+    return products.filter((product) =>
+      product.title.toLowerCase().includes(searchByTitle.toLowerCase())
+    );
+  };
+
+  useEffect(() => {
+    if (searchByTitle) {
+      setFilteredProducts(filterProductsByTitle());
+    }
+  }, [products, searchByTitle]);
 
   return (
     <CartContext.Provider
@@ -94,6 +111,9 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         setOrders,
         products,
         setProducts,
+        searchByTitle,
+        setSearchByTitle,
+        filteredProducts
       }}
     >
       {children}

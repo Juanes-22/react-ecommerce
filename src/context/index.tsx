@@ -1,6 +1,14 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 import { Product, Order } from "../types";
+
+import { CONFIG } from "../contants";
 
 interface CartContextProps {
   count: number;
@@ -17,6 +25,8 @@ interface CartContextProps {
   closeCheckoutSideMenu: () => void;
   orders: Order[];
   setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
+  products: Product[];
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -45,10 +55,25 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cartProducts, setCartProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
 
+  const [products, setProducts] = useState<Product[]>([]);
+
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
   const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${CONFIG.apiUrl}/products`);
+        const data = await res.json();
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <CartContext.Provider
@@ -67,6 +92,8 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         closeCheckoutSideMenu,
         orders,
         setOrders,
+        products,
+        setProducts,
       }}
     >
       {children}

@@ -13,9 +13,9 @@ export default function Home() {
   const { filteredProducts, setSearchByTitle } =
     useCartContext();
 
-  const currentPath = window.location.pathname;
-  const index = currentPath.lastIndexOf("/") + 1;
-  const pathParam = currentPath.substring(index);
+  // const currentPath = window.location.pathname;
+  // const index = currentPath.lastIndexOf("/") + 1;
+  // const pathParam = currentPath.substring(index);
 
   const renderProducts = () => {
     if (filteredProducts.length > 0) {

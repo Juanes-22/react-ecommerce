@@ -10,26 +10,20 @@ import { useCartContext } from "../../context";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 export default function Home() {
-  const { products, filteredProducts, searchByTitle, setSearchByTitle } =
+  const { filteredProducts, setSearchByTitle } =
     useCartContext();
 
+  const currentPath = window.location.pathname;
+  const index = currentPath.lastIndexOf("/") + 1;
+  const pathParam = currentPath.substring(index);
+
   const renderProducts = () => {
-    if (searchByTitle.length > 0) {
-      if (filteredProducts.length > 0) {
-        return filteredProducts.map((product: Product) => (
-          <Card key={product.id} product={product} />
-        ));
-      } else {
-        return (
-          <div>
-            No results found
-          </div>
-        )
-      }
-    } else {
-      return products.map((product: Product) => (
+    if (filteredProducts.length > 0) {
+      return filteredProducts.map((product: Product) => (
         <Card key={product.id} product={product} />
       ));
+    } else {
+      return <div>No results found</div>;
     }
   };
 

@@ -13,3 +13,11 @@ export interface Order {
   totalProducts: number;
   totalPrice: number;
 }
+
+export type Category =
+  | "all"
+  | "clothes"
+  | "electronics"
+  | "furnitures"
+  | "toys"
+  | "others";

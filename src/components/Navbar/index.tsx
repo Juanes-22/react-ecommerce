@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { CartContext } from "../../context";
+import { CartContext, useCartContext } from "../../context";
 
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 
@@ -22,10 +22,7 @@ const NavItem: React.FC<NavItemProps> = ({ to, children, activeStyle }) => {
 };
 
 const Navbar: React.FC = () => {
-  const context = useContext(CartContext);
-  if (!context) throw new Error("Context error");
-
-  const { count } = context;
+  const { cartProducts } = useCartContext();
 
   const activeStyle = "underline underline-offset-4";
 
@@ -85,7 +82,7 @@ const Navbar: React.FC = () => {
         </li>
         <li className="flex items-center gap-2">
           <ShoppingCartIcon className="h-5" />
-          <div>{count}</div>
+          <div>{cartProducts.length}</div>
         </li>
       </ul>
     </nav>

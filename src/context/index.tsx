@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { Product, Order } from "../types";
+import { Product, Order, Category } from "../types";
 
 import { CONFIG } from "../contants";
 
@@ -30,6 +30,8 @@ interface CartContextProps {
   searchByTitle: string;
   setSearchByTitle: React.Dispatch<React.SetStateAction<string>>;
   filteredProducts: Product[];
+  searchByCategory: Category;
+  setSearchByCategory: React.Dispatch<React.SetStateAction<Category>>;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -60,7 +62,9 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  
   const [searchByTitle, setSearchByTitle] = useState("");
+  const [searchByCategory, setSearchByCategory] = useState<Category>("all");
 
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
@@ -86,10 +90,22 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     );
   };
 
+  const filterProductsByCategory = () => {
+    return products.filter((product) =>
+      product.category.toLowerCase().includes(searchByCategory.toLowerCase())
+    );
+  };
+
   useEffect(() => {
     if (searchByTitle) {
       setFilteredProducts(filterProductsByTitle());
     }
+    if (searchByCategory) {
+      setFilteredProducts(filterProductsByCategory());
+    }
+
+    if (!searchByTitle) setFilteredProducts(products);
+
   }, [products, searchByTitle]);
 
   return (
@@ -113,7 +129,9 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         setProducts,
         searchByTitle,
         setSearchByTitle,
-        filteredProducts
+        filteredProducts,
+        searchByCategory,
+        setSearchByCategory
       }}
     >
       {children}
